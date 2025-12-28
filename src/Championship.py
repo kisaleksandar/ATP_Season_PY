@@ -1,0 +1,30 @@
+from Player import Player
+
+
+class Championship:
+    def __init__(self, players, tournaments):
+        self._players = players
+        self._tournaments = tournaments
+
+    def updateAtpRanks(self):
+
+        pass
+
+    def recoverPlayers(self):
+        for player in self._players:
+            player._injured = False
+
+    def loadFiles(self):
+        with open('D:\\ATP_Season_PY\\data\\players.txt', 'r') as f:
+            lines1 = f.readlines()
+            for line in lines1:
+                line = line.strip()
+                line = line.split(',')
+                player = Player(line[0], line[1], line[2], line[3], line[4], False)
+                self._players.append(player)
+        with open('D:\\ATP_Season_PY\\data\\players.txt', 'r') as f:
+            lines2 = f.readlines()
+            for line in lines2:
+                line = line.strip()
+                line = line.split(',')
+                self._tournaments.append(line)
