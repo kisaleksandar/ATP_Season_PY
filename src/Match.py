@@ -40,9 +40,7 @@ class Match:
                     self._p2scoreperset.append(0)
                 break
             self._playSet()
-        self.matchWinner()
-
-
+        return self.matchWinner()
 
     def _playSet(self):
         self._p1gems = 0
@@ -67,11 +65,9 @@ class Match:
                     self._p1scoreperset.append(self._p1gems)
                     break
 
-
     def _playGame(self):
         p1_points = 0
         p2_points = 0
-
 
         if self._serve == 0:
             probability = self._player1.servePointChance(self._player2, self._surface)
@@ -87,7 +83,6 @@ class Match:
             else:
                 p2_points += 1
 
-
             if p1_points >= 4 or p2_points >= 4:
                 if p1_points - p2_points >= 2:
                     self._p1gems += 1
@@ -95,7 +90,6 @@ class Match:
                 if p2_points - p1_points >= 2:
                     self._p2gems += 1
                     break
-
 
     def _playTieBreak(self):
         p1_points = 0
@@ -115,7 +109,6 @@ class Match:
             else:
                 p2_points += 1
 
-
             if p1_points >= 7 or p2_points >= 7:
                 if p1_points - p2_points >= 2:
                     self._p1gems += 1
@@ -130,27 +123,24 @@ class Match:
                     self._p2scoreperset.append(self._p2gems)
                     break
 
-
-
     def _chanceEvent(self, probability):
-        return self._rng.randint(1,100) <= probability
+        return self._rng.randint(1, 100) <= probability
 
     def printMatchResult(self, phase):
 
         print(f"=========={phase}===========")
-        print(f"{self._player1.name}", end = " ")
+        print(f"{self._player1.name}", end=" ")
         for gems in self._p1scoreperset:
-            print(gems, end = " ")
-        print(f"{self._p1sets}", end = " ")
+            print(gems, end=" ")
+        print(f"{self._p1sets}", end=" ")
 
-        print(f"{self._player2.name}", end = " ")
+        print(f"{self._player2.name}", end=" ")
         for gems in self._p2scoreperset:
-            print(gems, end = " ")
-        print(f"{self._p2sets}", end = " ")
+            print(gems, end=" ")
+        print(f"{self._p2sets}", end=" ")
 
     def matchWinner(self):
         if self._p1sets > self._p2sets:
             return self._player1
         else:
             return self._player2
-

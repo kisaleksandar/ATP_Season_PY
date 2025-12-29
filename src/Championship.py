@@ -6,9 +6,13 @@ class Championship:
         self._players = players
         self._tournaments = tournaments
 
-    def updateAtpRanks(self):
+    def updateAtpRanks(self, winner, points):
+        winner._atpPoints += points
+        self._players.sort(key=lambda p: p._atpPoints, reverse=True)
+        for i, player in enumerate(self._players, start =1):
+            player._atpRank = i
 
-        pass
+
 
     def recoverPlayers(self):
         for player in self._players:
