@@ -1,20 +1,20 @@
 from Tournament import *
 from Match import *
-from Championship import *
 import random
 
 
 class SeasonTournament(Tournament):
-    def __init__(self, tourName, tourType, tourSurface, players):
-        super().__init__(tourName, tourType, tourSurface, players)
+    def __init__(self, tourName, tourType, tourSurface, players, championship):
+        super().__init__(tourName, tourType, tourSurface)
         self._roundOf16 = []
         self._roundOf8 = []
         self._semiFinal = []
         self._final = []
+        self._championship = championship
 
 
     def play(self):
-        for player in self._players:
+        for player in self._championship._players:
             self._roundOf16.append(player)
         random.shuffle(self._roundOf16)
 
@@ -36,6 +36,7 @@ class SeasonTournament(Tournament):
             next_round.append(winner)
 
     def PointsPerPhase(self, phase, winner):
+        predict_dict = {}
         points_dict_grand_slam = {
             "RoundOf16": 180,
             "RoundOf8": 360,
@@ -58,17 +59,17 @@ class SeasonTournament(Tournament):
             predict_dict = points_dict_masters
 
         if phase == "RoundOf16":
-            self.updateAtpRanks(winner, predict_dict["RoundOf16"])
+            self._championship.updateAtpRanks(winner, predict_dict["RoundOf16"])
         elif phase == "RoundOf8":
-            self.updateAtpRanks(winner, predict_dict["RoundOf8"])
+            self._championship.updateAtpRanks(winner, predict_dict["RoundOf8"])
         elif phase == "SemiFinal":
-            self.updateAtpRanks(winner, predict_dict["SemiFinal"])
+            self._championship.updateAtpRanks(winner, predict_dict["SemiFinal"])
         elif phase == "FINAL":
             for finalist in self._final:
                 if finalist == winner:
-                    self.updateAtpRanks(finalist, predict_dict["champion"])
+                    self._championship.updateAtpRanks(finalist, predict_dict["champion"])
                 else:
-                    self.updateAtpRanks(finalist, predict_dict["vice_champion"])
+                    self._championship.updateAtpRanks(finalist, predict_dict["vice_champion"])
 
 
 
