@@ -3,8 +3,8 @@ from Tournament import *
 
 
 class AtpFinals(Tournament):
-    def __init__(self, tourName, tourType, tourSurface, championship):
-        super().__init__(tourName, tourType, tourSurface)
+    def __init__(self, tourName, championship):
+        super().__init__(tourName, "AtpFinals", "Hard", 2)
         self._AtpFinalPlayers = []
         self._groupA = []
         self._groupATable = {}
@@ -15,8 +15,6 @@ class AtpFinals(Tournament):
         self._championship = championship
 
     def play(self):
-        sorted_groupA = []
-        sorted_groupB = []
         self.SetDefaultState()
 
         self._AtpFinalPlayers = self._championship.getPlayersForTournament()[:8]
@@ -45,7 +43,7 @@ class AtpFinals(Tournament):
         for group in [self._groupA, self._groupB]:
             for i in range(len(group)):
                 for j in range(i+1, len(group)):
-                    match = Match(group[i], group[j], self._tourSurface, self._numofSets)
+                    match = Match(group[i], group[j], self._tourSurface, self._numOfSets)
                     winner, loser = match.playMatch()
                     if group == self._groupA:
                         match.printMatchResult("GroupA")
@@ -57,20 +55,20 @@ class AtpFinals(Tournament):
 
     def playSemiFinal(self):
 
-        match = Match(self._semiFinal[0], self._semiFinal[3], self._tourSurface, self._numofSets)
+        match = Match(self._semiFinal[0], self._semiFinal[3], self._tourSurface, self._numOfSets)
         winner, loser = match.playMatch()
         match.printMatchResult("Semi-Final")
         self._final.append(winner)
         self._championship.updateAtpRanks(winner, 400)
 
-        match = Match(self._semiFinal[1], self._semiFinal[2], self._tourSurface, self._numofSets)
+        match = Match(self._semiFinal[1], self._semiFinal[2], self._tourSurface, self._numOfSets)
         winner, loser = match.playMatch()
         match.printMatchResult("Semi-Final")
         self._final.append(winner)
         self._championship.updateAtpRanks(winner, 400)
 
     def playFinal(self):
-        match = Match(self._final[0], self._final[1], self._tourSurface, self._numofSets)
+        match = Match(self._final[0], self._final[1], self._tourSurface, self._numOfSets)
         winner, loser = match.playMatch()
         match.printMatchResult("Final")
         self._final.append(winner)

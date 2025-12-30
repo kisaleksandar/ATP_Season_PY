@@ -4,8 +4,8 @@ import random
 
 
 class SeasonTournament(Tournament):
-    def __init__(self, tourName, tourType, tourSurface, championship):
-        super().__init__(tourName, tourType, tourSurface)
+    def __init__(self, tourName, tourType, tourSurface, numOfSets, championship):
+        super().__init__(tourName, tourType, tourSurface, numOfSets)
         self._roundOf16 = []
         self._roundOf8 = []
         self._semiFinal = []
@@ -27,18 +27,18 @@ class SeasonTournament(Tournament):
         self.playRound(self._roundOf8, self._semiFinal, self._losersOf8, "RoundOf8")
         self.playRound(self._semiFinal, self._final, self._losersOfSemiFinal, "SemiFinal")
 
-        match = Match(self._final[0], self._final[1], self._tourSurface, self._numofSets)
+        match = Match(self._final[0], self._final[1], self._tourSurface, self._numOfSets)
         winner, loser = match.playMatch()
         self._viceChampion = loser
         self._champion = winner
 
         self.PointsPerPhase()
         match.printMatchResult("FINAL")
-        pass
+
 
     def playRound(self, current_round, next_round, losers, phase_name):
         for i in range(0, len(current_round), 2):
-            match = Match(current_round[i], current_round[i + 1], self._tourSurface, self._numofSets)
+            match = Match(current_round[i], current_round[i + 1], self._tourSurface, self._numOfSets)
             winner, loser = match.playMatch()
             match.printMatchResult(phase_name)
             next_round.append(winner)
