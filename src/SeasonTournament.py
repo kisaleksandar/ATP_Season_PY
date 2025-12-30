@@ -1,20 +1,22 @@
 from Tournament import *
 from Match import *
+from Player import Player
+from typing import List, Optional
 import random
 
 
 class SeasonTournament(Tournament):
     def __init__(self, tourName, tourType, tourSurface, numOfSets, championship):
         super().__init__(tourName, tourType, tourSurface, numOfSets)
-        self._roundOf16 = []
-        self._roundOf8 = []
-        self._semiFinal = []
-        self._final = []
-        self._losersOf16 = []
-        self._losersOf8 = []
-        self._losersOfSemiFinal = []
-        self._viceChampion = None
-        self._champion = None
+        self._roundOf16: List[Player] = []
+        self._roundOf8: List[Player] = []
+        self._semiFinal: List[Player] = []
+        self._final: List[Player] = []
+        self._losersOf16: List[Player] = []
+        self._losersOf8: List[Player] = []
+        self._losersOfSemiFinal: List[Player] = []
+        self._viceChampion: Optional[Player] = None
+        self._champion: Optional[Player] = None
         self._championship = championship
 
     def play(self):
@@ -34,7 +36,6 @@ class SeasonTournament(Tournament):
 
         self.PointsPerPhase()
         match.printMatchResult("FINAL")
-
 
     def playRound(self, current_round, next_round, losers, phase_name):
         for i in range(0, len(current_round), 2):

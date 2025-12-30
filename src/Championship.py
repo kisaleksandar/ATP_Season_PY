@@ -1,5 +1,5 @@
 from Player import Player
-from Tournament import Tournament
+from SeasonTournament import SeasonTournament
 
 
 class Championship:
@@ -10,7 +10,7 @@ class Championship:
     def updateAtpRanks(self, player, points):
 
         player.addPoints(points)
-        self._players.sort(key=lambda p: p.getPoints, reverse=True)
+        self._players.sort(key=lambda p: p.getPoints(), reverse=True)
         for i, player in enumerate(self._players, start=1):
             player.updateRank(i)
 
@@ -24,14 +24,17 @@ class Championship:
             for line in lines1:
                 line = line.strip()
                 line = line.split(',')
-                player = Player(line[0], line[1], line[2], line[3], line[4], False)
+                player = Player(line[0], line[1], line[2], int(line[3]), int(line[4]), False)
                 self._players.append(player)
         with open('D:\\ATP_Season_PY\\data\\tournaments.txt', 'r') as f:
             lines2 = f.readlines()
             for line in lines2:
                 line = line.strip()
                 line = line.split(',')
-                tour = Tournament(line[0], line[2], line[1])
+                if line[2] == "Grand Slam":
+                    tour = SeasonTournament(line[0], line[2], line[1], 3, self)
+                elif line[2] == "Masters1000":
+                    tour = SeasonTournament(line[0], line[2], line[1], 2, self)
                 self._tournaments.append(tour)
 
     def getPlayersForTournament(self):

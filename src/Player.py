@@ -57,6 +57,10 @@ class Player:
     def getPoints(self):
         return self._atpPoints
 
+    @property
+    def getName(self):
+        return self._name
+
 
 
 
