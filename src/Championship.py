@@ -7,13 +7,12 @@ class Championship:
         self._players = []
         self._tournaments = []
 
-    def updateAtpRanks(self, winner, points):
-        winner._atpPoints += points
-        self._players.sort(key=lambda p: p._atpPoints, reverse=True)
-        for i, player in enumerate(self._players, start =1):
-            player._atpRank = i
+    def updateAtpRanks(self, player, points):
 
-
+        player.addPoints(points)
+        self._players.sort(key=lambda p: p.getPoints, reverse=True)
+        for i, player in enumerate(self._players, start=1):
+            player.updateRank(i)
 
     def recoverPlayers(self):
         for player in self._players:
@@ -33,9 +32,8 @@ class Championship:
                 line = line.strip()
                 line = line.split(',')
                 tour = Tournament(line[0], line[2], line[1])
-                self._tournaments.append(line)
+                self._tournaments.append(tour)
 
     def getPlayersForTournament(self):
         players = list(self._players)
         return players
-

@@ -2,7 +2,7 @@ import random
 
 
 class Player:
-    def __init__(self, name, ability, preferedSurface, atpRank,atpPoints, injured):
+    def __init__(self, name, ability, preferedSurface, atpRank, atpPoints, injured):
         self._name = name
         self._ability = ability
         self._preferedSurface = preferedSurface
@@ -10,8 +10,7 @@ class Player:
         self._atpPoints = atpPoints
         self._injured = injured
 
-
-    def servePointChance(self, opponent , surface):
+    def servePointChance(self, opponent, surface):
         probability = 50
         if self._preferedSurface == surface:
             probability += 5
@@ -24,7 +23,6 @@ class Player:
             probability += 10
         elif self._ability == 'serve':
             probability += 15
-
 
         if opponent._ability == 'mentality':
             probability -= 10
@@ -49,6 +47,15 @@ class Player:
             if random.randint(1, 100) == 1:
                 self._injured = True
         return self._injured
+
+    def addPoints(self, points):
+        self._atpPoints += points
+
+    def updateRank(self, rank):
+        self._atpRank = rank
+
+    def getPoints(self):
+        return self._atpPoints
 
 
 
