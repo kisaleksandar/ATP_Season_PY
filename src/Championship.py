@@ -36,6 +36,6 @@ class Championship:
                 self._tournaments.append(line)
 
     def getPlayersForTournament(self):
-        players = self._players
+        players = list(self._players)
         return players
 

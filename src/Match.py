@@ -40,7 +40,7 @@ class Match:
                     self._p2scoreperset.append(0)
                 break
             self._playSet()
-        return self.matchWinner()
+        return self.matchWinnerLoser()
 
     def _playSet(self):
         self._p1gems = 0
@@ -139,8 +139,9 @@ class Match:
             print(gems, end=" ")
         print(f"{self._p2sets}", end=" ")
 
-    def matchWinner(self):
+    def matchWinnerLoser(self):
         if self._p1sets > self._p2sets:
-            return self._player1
+            return self._player1, self._player2
         else:
-            return self._player2
+            return self._player2, self._player1
+

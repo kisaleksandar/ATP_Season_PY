@@ -4,38 +4,47 @@ import random
 
 
 class SeasonTournament(Tournament):
-    def __init__(self, tourName, tourType, tourSurface, players, championship):
+    def __init__(self, tourName, tourType, tourSurface, championship):
         super().__init__(tourName, tourType, tourSurface)
         self._roundOf16 = []
         self._roundOf8 = []
         self._semiFinal = []
         self._final = []
+        self._losersOf16 = []
+        self._losersOf8 = []
+        self._losersOfSemiFinal = []
+        self._viceChampion = None
+        self._champion = None
         self._championship = championship
 
-
     def play(self):
-        for player in self._championship._players:
-            self._roundOf16.append(player)
+        self.ResetOfRoundLists()
+
+        self._roundOf16 = self._championship.getPlayersForTournament()
         random.shuffle(self._roundOf16)
 
-        self.playRound(self._roundOf16, self._roundOf8, "RoundOf16")
-        self.playRound(self._roundOf8, self._semiFinal, "RoundOf8")
-        self.playRound(self._semiFinal, self._final, "SemiFinal")
+        self.playRound(self._roundOf16, self._roundOf8, self._losersOf16, "RoundOf16")
+        self.playRound(self._roundOf8, self._semiFinal, self._losersOf8, "RoundOf8")
+        self.playRound(self._semiFinal, self._final, self._losersOfSemiFinal, "SemiFinal")
 
         match = Match(self._final[0], self._final[1], self._tourSurface, self._numofSets)
-        winner = match.playMatch()
-        match.printMatchResult("FINAL")
+        winner, loser = match.playMatch()
+        self._viceChampion = loser
+        self._champion = winner
 
+        self.PointsPerPhase()
+        match.printMatchResult("FINAL")
         pass
 
-    def playRound(self, current_round, next_round, phase_name):
+    def playRound(self, current_round, next_round, losers, phase_name):
         for i in range(0, len(current_round), 2):
             match = Match(current_round[i], current_round[i + 1], self._tourSurface, self._numofSets)
-            winner = match.playMatch()
+            winner, loser = match.playMatch()
             match.printMatchResult(phase_name)
             next_round.append(winner)
+            losers.append(loser)
 
-    def PointsPerPhase(self, phase, winner):
+    def PointsPerPhase(self):
         predict_dict = {}
         points_dict_grand_slam = {
             "RoundOf16": 180,
@@ -58,20 +67,23 @@ class SeasonTournament(Tournament):
         elif self._tourType == "Masters1000":
             predict_dict = points_dict_masters
 
-        if phase == "RoundOf16":
-            self._championship.updateAtpRanks(winner, predict_dict["RoundOf16"])
-        elif phase == "RoundOf8":
-            self._championship.updateAtpRanks(winner, predict_dict["RoundOf8"])
-        elif phase == "SemiFinal":
-            self._championship.updateAtpRanks(winner, predict_dict["SemiFinal"])
-        elif phase == "FINAL":
-            for finalist in self._final:
-                if finalist == winner:
-                    self._championship.updateAtpRanks(finalist, predict_dict["champion"])
-                else:
-                    self._championship.updateAtpRanks(finalist, predict_dict["vice_champion"])
+        for loser in self._losersOf16:
+            self._championship.updateAtpRanks(loser, predict_dict["RoundOf16"])
+        for loser in self._losersOf8:
+            self._championship.updateAtpRanks(loser, predict_dict["RoundOf8"])
+        for loser in self._losersOfSemiFinal:
+            self._championship.updateAtpRanks(loser, predict_dict["SemiFinal"])
 
+        self._championship.updateAtpRanks(self._viceChampion, predict_dict["vice_champion"])
+        self._championship.updateAtpRanks(self._champion, predict_dict["champion"])
 
-
-
-
+    def ResetOfRoundLists(self):
+        self._roundOf16 = []
+        self._roundOf8 = []
+        self._semiFinal = []
+        self._final = []
+        self._losersOf16 = []
+        self._losersOf8 = []
+        self._losersOfSemiFinal = []
+        self._viceChampion = None
+        self._champion = None
