@@ -144,4 +144,3 @@ class Match:
             return self._player1, self._player2
         else:
             return self._player2, self._player1
-

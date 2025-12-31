@@ -88,3 +88,7 @@ class SeasonTournament(Tournament):
         self._losersOfSemiFinal = []
         self._viceChampion = None
         self._champion = None
+
+    @property
+    def getName(self):
+        return self._tourName

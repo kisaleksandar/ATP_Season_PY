@@ -40,3 +40,9 @@ class Championship:
     def getPlayersForTournament(self):
         players = list(self._players)
         return players
+
+    def getTournaments(self):
+        return self._tournaments
+
+
+
