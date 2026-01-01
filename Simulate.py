@@ -24,7 +24,7 @@ if __name__ == "__main__":
             print("Morate uneti broj gospodine!")
 
         else:
-            if UserInput >= 4 and UserInput <= 13:
+            if UserInput in range(4,13):
                 NumOfTour = UserInput
                 break
             else:
@@ -49,16 +49,18 @@ if __name__ == "__main__":
         if Tour is not None:
             Tour.play()
 
-        while True:
-            i = input("Sada ce se odigrati ATP finals turnir, jeste li spremni kapetane?" : )
-            if i in ["yes", "y"]:
-                Atp = AtpFinals(championship)
-                Atp.play()
-                break
-            else:
-                print("Aj razmisli jos jednom")
+    while True:
+        i = input("Sada ce se odigrati ATP finals turnir, jeste li spremni kapetane?: ")
+        if i in ["yes", "y"]:
+            Atp = AtpFinals(championship)
+            Atp.play()
+            for player in championship.getPlayersForTournament():
+                print(f"{player.name}  points: {player.points}  rank: {player.rank}")
+            break
+        else:
+            print("Aj razmisli jos jednom")
 
-        print("Kraj simulacije!!!")
+    print("Kraj simulacije!!!")
 
 
 

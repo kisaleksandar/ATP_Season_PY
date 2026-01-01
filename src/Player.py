@@ -54,8 +54,17 @@ class Player:
     def updateRank(self, rank):
         self._atpRank = rank
 
-    def getPoints(self):
+    @property
+    def points(self):
         return self._atpPoints
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def rank(self):
+        return self._atpRank
 
     @property
     def getName(self):

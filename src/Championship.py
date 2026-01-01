@@ -10,7 +10,7 @@ class Championship:
     def updateAtpRanks(self, player, points):
 
         player.addPoints(points)
-        self._players.sort(key=lambda p: p.getPoints(), reverse=True)
+        self._players.sort(key=lambda p: p.points, reverse=True)
         for i, player in enumerate(self._players, start=1):
             player.updateRank(i)
 
