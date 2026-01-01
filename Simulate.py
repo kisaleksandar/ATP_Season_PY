@@ -1,12 +1,14 @@
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
+from src.AtpFinals import AtpFinals
 from src.Championship import Championship
-from src.SeasonTournament import SeasonTournament
 
 list_of_tournaments = ["Australian Open", "Indian Wells Masters", "Miami Open", "Monte-Carlo Masters", "Madrid Open", "Italian Open", "French Open", "Wimbledon", "Canadian Open", "Cincinnati Open", "US Open", "Shanghai Masters", "Paris Masters"]
+tournaments_already_played = []
 
 if __name__ == "__main__":
     NumOfTour = 0
@@ -31,17 +33,33 @@ if __name__ == "__main__":
     for i in range(UserInput):
         while True:
             UserTour = input("Unesite  turnir koji zelite da se odigra: ")
-            if UserTour in list_of_tournaments:
+            if UserTour in list_of_tournaments and UserTour not in tournaments_already_played:
+                tournaments_already_played.append(UserTour)
                 break
+            elif UserTour in tournaments_already_played:
+                print("Turnir je vec odigran, morate odabrati drugi:")
             else:
-                print("Morate uneti validno ime turnira sa razmakom i prvim slovom velikim")
+                print("Morate pravilno uneti ime turnira: ")
 
         for tour_instance in championship.getTournaments():
             if UserTour == tour_instance.getName:
                 Tour = tour_instance
                 break
 
-        Tour.play()
+        if Tour is not None:
+            Tour.play()
+
+        while True:
+            i = input("Sada ce se odigrati ATP finals turnir, jeste li spremni kapetane?" : )
+            if i in ["yes", "y"]:
+                Atp = AtpFinals(championship)
+                Atp.play()
+                break
+            else:
+                print("Aj razmisli jos jednom")
+
+        print("Kraj simulacije!!!")
+
 
 
 

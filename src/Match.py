@@ -128,16 +128,16 @@ class Match:
 
     def printMatchResult(self, phase):
 
-        print(f"=========={phase}===========")
-        print(f"{self._player1.name}", end=" ")
+        print(f"=========={phase}===========\n")
+        print(f"{self._player1.getName}", end=" ")
         for gems in self._p1scoreperset:
             print(gems, end=" ")
-        print(f"{self._p1sets}", end=" ")
+        print(f"{self._p1sets}", end="\n")
 
-        print(f"{self._player2.name}", end=" ")
+        print(f"{self._player2.getName}", end=" ")
         for gems in self._p2scoreperset:
             print(gems, end=" ")
-        print(f"{self._p2sets}", end=" ")
+        print(f"{self._p2sets}", end="\n")
 
     def matchWinnerLoser(self):
         if self._p1sets > self._p2sets:

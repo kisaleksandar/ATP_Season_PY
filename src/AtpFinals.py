@@ -3,8 +3,8 @@ from Tournament import *
 
 
 class AtpFinals(Tournament):
-    def __init__(self, tourName, championship):
-        super().__init__(tourName, "AtpFinals", "Hard", 2)
+    def __init__(self, championship):
+        super().__init__("ATP_FINALS", "AtpFinals", "Hard", 2)
         self._AtpFinalPlayers = []
         self._groupA = []
         self._groupATable = {}

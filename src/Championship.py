@@ -19,12 +19,12 @@ class Championship:
             player._injured = False
 
     def loadFiles(self):
-        with open('D:\\ATP_Season_PY\\data\\players.txt', 'r') as f:
+        with open(r'D:\ATP_Season_PY\data\players.txt', 'r') as f:
             lines1 = f.readlines()
             for line in lines1:
                 line = line.strip()
                 line = line.split(',')
-                player = Player(line[0], line[1], line[2], int(line[3]), int(line[4]), False)
+                player = Player(line[1], line[2], line[3], int(line[0]), int(line[4]), False)
                 self._players.append(player)
         with open('D:\\ATP_Season_PY\\data\\tournaments.txt', 'r') as f:
             lines2 = f.readlines()
