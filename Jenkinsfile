@@ -9,16 +9,17 @@ pipeline {
     stage('Setup'){
         steps {
             bat '''
-            python3 -m venv venv 
-            source venv/bin/activate
-            pip install -r requirements.txt
+            python -m venv venv 
+            call venv/bin/activate
+			python -m pip install --upgrade pip
+            python -m pip install -r requirements.txt
             '''
             }
         }
     stage('Run Tests') {
         steps {
             bat '''
-            source venv/bin/activate
+            call venv/bin/activate
             pytest --junitxml=results.xml
             '''
         }
