@@ -104,10 +104,15 @@ class Match:
                 self._serve = 0
 
             win = self._chanceEvent(probability)
-            if win:
+            if win and self._serve == 0:
                 p1_points += 1
-            else:
+            elif not win and self._serve == 0:
                 p2_points += 1
+            elif win and self._serve == 1:
+                p2_points += 1
+            elif not win and self._serve == 1:
+                p1_points += 1
+
 
             if p1_points >= 7 or p2_points >= 7:
                 if p1_points - p2_points >= 2:
@@ -144,3 +149,11 @@ class Match:
             return self._player1, self._player2
         else:
             return self._player2, self._player1
+
+    @property
+    def pl1(self):
+        return self._player1
+
+    @property
+    def pl2(self):
+        return self._player2
